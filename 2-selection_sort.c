@@ -31,9 +31,12 @@ void selection_sort(int *array, size_t size)
 	size_t i = 0, j = 0, holder;
 	int min, temp;
 
-	while (unsorted(array, size) && size > 1)
+	if (size < 2)
+		return;
+
+	for (; i < (size - 1); i++)
 	{
-		for (; i < (size - 1); i++)
+		if (unsorted(array, size))
 		{
 			j = i;
 			min = array[i];
@@ -45,10 +48,13 @@ void selection_sort(int *array, size_t size)
 					holder = j;
 				}
 			}
-			temp = array[i];
-			array[i] = min;
-			array[holder] = temp;
-			print_array((const int *)array, size);
+			if (array[i] != min)
+			{
+				temp = array[i];
+				array[i] = min;
+				array[holder] = temp;
+				print_array((const int *)array, size);
+			}
 		}
 	}
 }
