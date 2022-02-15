@@ -15,23 +15,32 @@ void swap(int *x, int *y)
 	*y = temp;
 }
 
-int partition(int *array, int low, int high)
+int partition(int *array, int low, int high, size_t size)
 {
 	int i, j, pivot_value = 0;
 
 	pivot_value = array[high];
-	i = low;
+	i = (low - 1);
 
-	for (j = low; j < high; j++)
+	for (j = low; j <= (high - 1); j++)
 	{
-		if (array[j] <= pivot_value)
+		if (array[j] < pivot_value)
 		{
-			swap(&array[i], &array[j]);
 			i++;
+			if (i != j)
+			{
+				swap(&array[i], &array[j]);
+				print_array((const int *)array, size);
+			}
 		}
 	}
-	swap(&array[i], &array[high]);
-	return (i);
+	if (array[i +1] > array[high])
+	{
+		swap(&array[i + 1], &array[high]);
+		print_array((const int *)array, size);
+	}
+
+	return (i + 1);
 }
 
 /**
@@ -43,12 +52,11 @@ int partition(int *array, int low, int high)
  */
 void quicksort_recursion(int *array, int low, int high, size_t size)
 {
-	int pivot_index;
+	int pivot_index = 0;
 
 	if (low < high)
 	{
-		pivot_index = partition(array, low, high);
-		print_array((const int *)array, size);
+		pivot_index = partition(array, low, high, size);
 		quicksort_recursion(array, low, (pivot_index - 1), size);
 		quicksort_recursion(array, (pivot_index + 1), high, size);
 	}
@@ -62,8 +70,8 @@ void quicksort_recursion(int *array, int low, int high, size_t size)
  */
 void quick_sort(int *array, size_t size)
 {
-	if (size < 2)
+	if (size < 2 || array == NULL)
 		return;
 	
-	quicksort_recursion(array, 0, (size - 1), size);
+	quicksort_recursion(array, 0, size - 1, size);
 }
