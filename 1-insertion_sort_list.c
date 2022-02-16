@@ -1,5 +1,4 @@
 #include "sort.h"
-#include <unistd.h>
 
 /**
  * insertion_sort_list - Sorts a DLL
@@ -13,7 +12,7 @@ void insertion_sort_list(listint_t **list)
 	if (!list)
 		return;
 	current = *list;
-	while (current != NULL)
+	while (list)
 	{
 		if (current->n > current->next->n)
 		{
@@ -36,7 +35,10 @@ void insertion_sort_list(listint_t **list)
 						temp->prev = current->next;
 					}
 					else
+					{
 						current->next->next = NULL;
+						current->next->prev = current;
+					}
 					print_list(*list);
 				}
 				else
@@ -44,5 +46,7 @@ void insertion_sort_list(listint_t **list)
 			}
 		}
 		current = current->next;
+		if (current->next == NULL)
+			return;
 	}
 }
