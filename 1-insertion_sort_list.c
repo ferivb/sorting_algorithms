@@ -35,10 +35,7 @@ void insertion_sort_list(listint_t **list)
 						temp->prev = current->next;
 					}
 					else
-					{
 						current->next->next = NULL;
-						current->next->prev = current;
-					}
 					print_list(*list);
 				}
 				else
